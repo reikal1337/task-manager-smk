@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import "../styles.css";
 
 export default function Navbar() {
@@ -8,10 +9,10 @@ export default function Navbar() {
       </a>
       <ul>
         <li>
-          <a href="/prisijungti">Prisijungti</a>
+          <Link to="/login">Prisijungti</Link>
         </li>
         <li>
-          <a href="/registracija">Pradėti</a>
+          <Link to="/registration">Registruotis</Link>
         </li>
       </ul>
     </nav>
