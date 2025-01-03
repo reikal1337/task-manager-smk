@@ -9,7 +9,7 @@ export default function Navbar() {
       </a>
       <ul>
         <li>
-          <Link href="/login">Prisijungti</Link>
+          <Link href="/prisijungimas">Prisijungti</Link>
         </li>
         <li>
           <Link href="/registracija">Registruotis</Link>
