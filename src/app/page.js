@@ -1,17 +1,8 @@
-"use client";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from "./components/navbar";
-import Registration from "./components/registration";
-
-export default function Home() {
+export default function HomePage() {
   return (
-    <Router>
-      <Navbar/>
-      <div className='content' >
-        <Routes>
-          <Route path="/registration" element={<Registration/>} />
-        </Routes>
-      </div>
-    </Router>
+    <div>
+      {" "}
+      <div className="content"></div>
+    </div>
   );
 }
