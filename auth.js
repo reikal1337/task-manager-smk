@@ -12,5 +12,12 @@ export const {
 } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
-  providers: [Credentials({})],
+  providers: [
+    Credentials({
+      credentials: {
+        email: {},
+        password: {},
+      },
+    }),
+  ],
 });
