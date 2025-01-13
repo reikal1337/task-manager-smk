@@ -15,45 +15,39 @@ export const {
   session: { strategy: "jwt" },
   providers: [
     Credentials({
-      name: "Credentials",
+      name: "credentials",
       credentials: {
-        email: {},
-        password: {},
+        email: { type: "email" },
+        password: { type: "password" },
       },
       authorize: async (credentials) => {
+        console.log("creds: ", credentials);
+
         if (!credentials || !credentials.email || !credentials.password) {
           return null;
         }
+        const { email, password } = credentials;
 
-        const hashedPassword = saltAndhashPassword(credentials.password);
-
-        let user = await prisma.user.findunique({
+        let user = await prisma.user.findUnique({
           where: {
             email,
           },
         });
 
         if (!user) {
-          user = await db.user.create({
-            data: {
-              email,
-              password: hashedPassword,
-            },
-          });
-        } else {
-          const passwordIsCorrect = bcrypt.compareSync(
-            credentials.password,
-            user.password
-          );
-
-          if (!passwordIsCorrect) {
-            throw new Error("Netinkami prisijungimo duomenys!");
-          }
-
-          delete user.password;
-
-          return user;
+          return null;
         }
+
+        const passwordIsCorrect = bcrypt.compareSync(password, user.password);
+        console.log("1 lol?");
+
+        if (!passwordIsCorrect) {
+          throw new Error("Netinkami prisijungimo duomenys!");
+        }
+
+        delete user.password;
+        console.log("2 lol?");
+        return user;
       },
     }),
   ],

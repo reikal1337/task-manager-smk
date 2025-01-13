@@ -1,15 +1,16 @@
 "use client";
 import { useState } from "react";
 import "./registration.css";
+import { registerWithCredentials } from "@/actions/auth";
 
 export default function RegistrationPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", { email, password });
+    console.log(email, password);
   };
 
   return (

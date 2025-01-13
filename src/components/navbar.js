@@ -1,9 +1,11 @@
 import Link from "next/link";
 import "./navbar.css";
 import { auth } from "../../auth";
+import LogoutButton from "./LogoutButton";
 
 export default async function Navbar() {
   const session = await auth();
+
   return (
     <nav className="navbar">
       <a href="./" className="pagrindinis">
@@ -20,7 +22,7 @@ export default async function Navbar() {
             </li>
           </>
         ) : (
-          <button>Atsijungti</button>
+          <LogoutButton />
         )}
       </ul>
     </nav>

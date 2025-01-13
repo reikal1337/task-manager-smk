@@ -10,8 +10,6 @@ export default async function middleware(req) {
     req.nextUrl.pathname.startsWith(route)
   );
 
-  console.log("Middle?");
-
   if (!session && isRouteProtected) {
     const absoluteURL = new URL("/", req.nextUrl.origin);
 
