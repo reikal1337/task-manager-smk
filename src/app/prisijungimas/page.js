@@ -1,8 +1,6 @@
 "use client";
-
 import React, { useState } from "react";
 import "./prisijungimas.css";
-import { loginWithCredentials } from "@/actions/auth";
 
 const PrisijungimasPage = () => {
   const [email, setEmail] = useState("");
