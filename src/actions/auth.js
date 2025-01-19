@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "../../auth";
 import { prisma } from "@/db/prisma";
 import { saltAndhashPassword } from "@/utils/hash";
+import { redirect } from "next/navigation";
 
 const getUserByEmail = async (email) => {
   try {
@@ -40,18 +41,19 @@ const createNewUser = async (email, password) => {
 };
 
 export const login = async (provider) => {
-  await signIn(provider, { redirectTo: "/" });
+  await signIn(provider);
   revalidatePath("/");
 };
 
 export const logout = async () => {
-  await signOut({ redirectTo: "/" });
+  await signOut();
   revalidatePath("/");
 };
 
 export const loginWithCredentials = async (formData) => {
   try {
-    await signIn("credentials", formData, { redirectTo: "/dashboard" });
+    await signIn("credentials", { ...formData, redirect: false });
+    return { message: "Prisijungiai!" };
   } catch (error) {
     console.log(error);
     return { message: "Nepavyko prisijungti, netinkami duomenys catch!" };
@@ -74,10 +76,8 @@ export const registerWithCredentials = async (formData) => {
         email: newUser.email,
         password: formData.password,
       };
-
-      await loginWithCredentials(loginData);
     }
-    revalidatePath("/");
+    return { message: "Prisiregistarvai!" };
   } catch (error) {
     console.log(error);
     return { message: "Nepavyko prisiregistruoti, netinkami duomenys!" };

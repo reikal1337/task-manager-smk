@@ -2,11 +2,13 @@
 import { useState } from "react";
 import "./registration.css";
 import { registerWithCredentials } from "@/actions/auth";
+import { useRouter } from "next/navigation";
 
 export default function RegistrationPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,7 +16,14 @@ export default function RegistrationPage() {
       alert("Slaptazodziai turi sutapti!");
       return;
     }
-    await registerWithCredentials({ email, password });
+    const response = await registerWithCredentials({ email, password });
+    if (response?.message) {
+      if (response.message === "Prisiregistarvai!") {
+        router.push("/prisijungimas");
+        return;
+      }
+      alert(response.message);
+    }
   };
 
   return (

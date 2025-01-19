@@ -1,16 +1,24 @@
 "use client";
 import React, { useState } from "react";
 import "./prisijungimas.css";
-import { signIn } from "../../../auth";
 import { loginWithCredentials } from "@/actions/auth";
+import { useRouter } from "next/navigation";
 
 const PrisijungimasPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await loginWithCredentials({ email, password });
+    const response = await loginWithCredentials({ email, password });
+    if (response?.message) {
+      if (response.message === "Prisijungiai!") {
+        router.push("/");
+        return;
+      }
+      alert(response.message);
+    }
   };
 
   return (
