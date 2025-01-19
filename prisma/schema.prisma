@@ -35,10 +35,10 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   Task      Task[]
-  Comment   Comment[]
+  // Comment   Comment[]
 }
 
 model Account {
@@ -83,47 +83,51 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Project {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  startDate DateTime
-  endDate   DateTime
-  status    String   @default("Planuojama")
-  createdAt DateTime @default(now())
-  tasks     Task[]
-}
+// model Project {
+//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+//   name      String
+//   startDate DateTime
+//   endDate   DateTime
+//   status    String   @default("Planuojama")
+//   createdAt DateTime @default(now())
+//   tasks     Task[]
+// }
 
 model Task {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  projectId   String        @db.ObjectId
-  userId      String        @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  // projectId   String        @db.ObjectId
+  userId      String   @db.ObjectId
   name        String
   description String?
   startDate   DateTime
   endDate     DateTime
-  status      Status        @default(DAROMAS)
-  priority    Priority      @default(VIDUTINIS)
-  createdAt   DateTime      @default(now())
-  project     Project       @relation(fields: [projectId], references: [id])
-  user        User          @relation(fields: [userId], references: [id])
-  comments    Comment[]
-  histories   TaskHistory[]
+  status      Status   @default(DAROMAS)
+  priority    Priority @default(VIDUTINIS)
+  createdAt   DateTime @default(now())
+  // project     Project       @relation(fields: [projectId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+  // comments    Comment[]
+  // histories   TaskHistory[]
+  // Project     Project?      @relation(fields: [projectId], references: [id])
+  // projectId   String?       @db.ObjectId
+  // Comment     Comment[]
+  // TaskHistory TaskHistory[]
 }
 
-model Comment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  taskId    String   @db.ObjectId
-  userId    String   @db.ObjectId
-  text      String
-  createdAt DateTime @default(now())
-  task      Task     @relation(fields: [taskId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
-}
+// model Comment {
+//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+//   taskId    String   @db.ObjectId
+//   userId    String   @db.ObjectId
+//   text      String
+//   createdAt DateTime @default(now())
+//   task      Task     @relation(fields: [taskId], references: [id])
+//   user      User     @relation(fields: [userId], references: [id])
+// }
 
-model TaskHistory {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  taskId     String   @db.ObjectId
-  status     String   @default("Laukia")
-  changeTime DateTime @default(now())
-  task       Task     @relation(fields: [taskId], references: [id])
-}
+// model TaskHistory {
+//   id         String   @id @default(auto()) @map("_id") @db.ObjectId
+//   taskId     String   @db.ObjectId
+//   status     String   @default("Laukia")
+//   changeTime DateTime @default(now())
+//   task       Task     @relation(fields: [taskId], references: [id])
+// }

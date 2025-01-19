@@ -10,7 +10,11 @@ export default function RegistrationPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    if (password !== confirmPassword) {
+      alert("Slaptazodziai turi sutapti!");
+      return;
+    }
+    await registerWithCredentials({ email, password });
   };
 
   return (

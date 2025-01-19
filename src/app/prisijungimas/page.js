@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import "./prisijungimas.css";
+import { signIn } from "../../../auth";
+import { loginWithCredentials } from "@/actions/auth";
 
 const PrisijungimasPage = () => {
   const [email, setEmail] = useState("");
@@ -8,7 +10,7 @@ const PrisijungimasPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    await loginWithCredentials({ email, password });
   };
 
   return (
